@@ -1,0 +1,11 @@
+FROM microsoft/aspnetcore-build:2.0.3-nanoserver
+
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+
+ENV CHROME_VERSION 375.126
+
+RUN Invoke-WebRequest -UseBasicParsing http://dl.google.com/chrome/install/${env:CHROME_VERSION}/chrome_installer.exe -outfile chrome.exe; \
+	# Install Chrome
+	.\chrome.exe /silent /install; \
+	# Cleanup
+	Remove-Item -Force chrome.exe
